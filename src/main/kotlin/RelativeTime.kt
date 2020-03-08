@@ -4,7 +4,7 @@ class RelativeTime(
     private val timeRangeFormatters: List<TimeRangeFormatter>,
     private val timeZone: TimeZone = TimeZone.getDefault(),
     private val currentTimeProvider: () -> Long = { System.currentTimeMillis() },
-    private val fallback: String? = "",
+    private val fallback: String? = null,
     private val onThrowableCaught: (Throwable) -> Unit = {}
 ) {
 
