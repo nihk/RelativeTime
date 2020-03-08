@@ -1,8 +1,14 @@
+[ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.1) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.1/link)
+
 # RelativeTime
-A library that lets you get really customized with relative time, e.g. "5 hours ago" or "1 month from now" - sky's the limit. This library is only two small classes - you can just copy and paste them into your project.
+A library that lets you get really customized and specific with relative time, e.g. "5 hours ago" or "1 month from now" - sky's the limit. 
 
 ## How to use:
-Simply define the min/max range that any delta from a current timestamp can fall into, how to map that value to a `String`, and plug it into an instance of `RelativeTime`
+First add it as a gradle dependency:
+
+```implementation "ca.nihk:relativetime:0.0.1"```
+
+Then in code simply define the min/max range that any delta from a current timestamp can fall into, how to map that value to a `String`, and plug it into an instance of `RelativeTime`
 
 For example, if you wanted a `Long` timestamp that falls between 2 minutes and 1 hour in the past to map to a `String` like  "5 molasses-like minutes ago", create a `TimeRangeFormatter` like so:
 
