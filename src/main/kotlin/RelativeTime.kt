@@ -4,7 +4,8 @@ class RelativeTime(
     private val timeRangeFormatters: List<TimeRangeFormatter>,
     private val timeZone: TimeZone = TimeZone.getDefault(),
     private val currentTimeProvider: () -> Long = { System.currentTimeMillis() },
-    private val fallback: String? = ""
+    private val fallback: String? = "",
+    private val onThrowableCaught: (Throwable) -> Unit = {}
 ) {
 
     fun from(timeInMillis: String?): String? {
@@ -18,7 +19,8 @@ class RelativeTime(
         return try {
             timeRangeFormatters.find { it.contains(delta) }
                 ?.format?.invoke(delta, timeInMillis, timeZone) ?: fallback
-        } catch (e: Exception) {
+        } catch (throwable: Throwable) {
+            onThrowableCaught(throwable)
             fallback
         }
     }
