@@ -1,15 +1,30 @@
 import java.util.*
+import kotlin.time.Duration
+import kotlin.time.milliseconds
 
 class TimeRangeFormatter(
-    val format: (delta: Long, timeInMillis: Long, timeZone: TimeZone) -> String,
-    private val min: Long,
-    private val max: Long,
-    private val inclusiveMin: Boolean,
-    private val inclusiveMax: Boolean
+    private val range: ClosedRange<Duration>,
+    val format: (delta: Duration, time: Duration, timeZone: TimeZone) -> String
 ) {
 
-    fun contains(value: Long): Boolean {
-        return (min == value && inclusiveMin || min < value)
-                && (value < max || value == max && inclusiveMax)
+    fun contains(duration: Duration): Boolean {
+        return range.contains(duration)
     }
+}
+
+val now = Duration.ZERO
+val dawnOfTime = Long.MIN_VALUE.milliseconds
+val endOfTime = Long.MAX_VALUE.milliseconds
+
+infix fun Duration.inclusiveToInclusive(end: Duration): ClosedRange<Duration> {
+    return this..end
+}
+infix fun Duration.inclusiveToExclusive(end: Duration): ClosedRange<Duration> {
+    return this..(end - 1.milliseconds)
+}
+infix fun Duration.exclusiveToInclusive(end: Duration): ClosedRange<Duration> {
+    return (this + 1.milliseconds)..end
+}
+infix fun Duration.exclusiveToExclusive(end: Duration): ClosedRange<Duration> {
+    return (this + 1.milliseconds)..(end - 1.milliseconds)
 }

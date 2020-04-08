@@ -1,6 +1,7 @@
 import org.junit.Assert
 import org.junit.Test
 import java.util.*
+import kotlin.time.milliseconds
 
 class RelativeTimeTest {
 
@@ -312,7 +313,7 @@ class RelativeTimeTest {
         return RelativeTime(
             timeRangeFormatters = timeRangeFormatters,
             timeZone = timeZone,
-            currentTimeProvider = { now },
+            currentTimeProvider = { now.milliseconds },
             fallback = fallback
         )
     }
