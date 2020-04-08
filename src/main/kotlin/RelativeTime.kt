@@ -3,7 +3,7 @@ import kotlin.time.Duration
 import kotlin.time.milliseconds
 
 class RelativeTime(
-    private val timeRangeFormatters: List<TimeRangeFormatter>,
+    private val timeRangeFormatters: List<TimeRangeFormatter> = TimeRangeFormatters.DEFAULTS,
     private val timeZone: TimeZone = TimeZone.getDefault(),
     private val currentTimeProvider: () -> Duration = { System.currentTimeMillis().milliseconds },
     private val fallback: String? = null,
@@ -24,7 +24,8 @@ class RelativeTime(
 
         return try {
             timeRangeFormatters.find { it.contains(delta) }
-                ?.format?.invoke(delta, time, timeZone) ?: fallback
+                ?.format?.invoke(delta, time, timeZone)
+                ?: fallback
         } catch (throwable: Throwable) {
             onThrowableCaught(throwable)
             fallback
