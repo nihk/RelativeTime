@@ -1,26 +1,9 @@
-[ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.3) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.3/link)
+[ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.4) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.4/link)
 
 # RelativeTime
 A library that lets you define the language of relative time, e.g. "5 hours ago" or "1 month from now" and so on.
 
 Note: this library uses `kotlin.time.Duration` which is, at the time of writing, an experimental API requiring Kotlin 1.3.50 and above.
-
-## Install:
-
-With Gradle (make sure you have `jcenter()` set as a repository):
-
-```implementation "ca.nihk:relativetime:0.0.3"```
-
-With Maven:
-
-```
-<dependency>
-	<groupId>ca.nihk</groupId>
-	<artifactId>relativetime</artifactId>
-	<version>0.0.3</version>
-	<type>pom</type>
-</dependency>
-```
 
 ## How to use:
 
@@ -45,4 +28,19 @@ Now any values given to its `RelativeTime#from` function that fall within the ra
 println(relativeTime.from(System.currentTimeMillis().milliseconds + 5.minutes))  // prints "5 minutes from now"
 ```
 
-Optionally you can instantiate `RelativeTime` without any arguments and it will use a set of [default values](https://github.com/nihk/RelativeTime/blob/master/src/main/kotlin/TimeRangeFormatter.kt#L46).
+## Install:
+
+With Gradle (make sure you have `jcenter()` set as a repository):
+
+```implementation "ca.nihk:relativetime:0.0.4"```
+
+With Maven:
+
+```
+<dependency>
+	<groupId>ca.nihk</groupId>
+	<artifactId>relativetime</artifactId>
+	<version>0.0.4</version>
+	<type>pom</type>
+</dependency>
+```

@@ -3,7 +3,7 @@ import kotlin.time.Duration
 import kotlin.time.milliseconds
 
 class RelativeTime(
-    private val timeRangeFormatters: List<TimeRangeFormatter> = TimeRangeFormatters.DEFAULTS,
+    private val timeRangeFormatters: List<TimeRangeFormatter>,
     private val timeZone: TimeZone = TimeZone.getDefault(),
     private val currentTimeProvider: () -> Duration = { System.currentTimeMillis().milliseconds },
     private val fallback: String? = null,
