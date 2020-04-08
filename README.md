@@ -1,33 +1,48 @@
 [ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.2) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.2/link)
 
 # RelativeTime
-A library that lets you get really customized and specific with relative time, e.g. "5 hours ago" or "1 month from now" - sky's the limit. 
+A library that lets you define the language of relative time, e.g. "5 hours ago" or "1 month from now" and so on.
 
-## How to use:
-First add it as a gradle dependency:
+Note: this library uses `kotlin.time.Duration` which is, at the time of writing, an experimental API requiring Kotlin 1.3.50 and above.
+
+## Install:
+
+With Gradle (make sure you have `jcenter()` set as a repository):
 
 ```implementation "ca.nihk:relativetime:0.0.2"```
 
-Then in code simply define the range that any delta from a current timestamp can fall into, how to map that value to a `String`, and plug it into an instance of `RelativeTime`
-
-For example, if you had a `Long` timestamp that falls between 2 minutes and 1 hour in the past inclusive and wanted to map it to a `String` like  "5 molasses-like minutes ago", create a `TimeRangeFormatter` like so:
+With Maven:
 
 ```
-val minutesAgo = TimeRangeFormatter((-1).hours inclusiveToInclusive (-2).minutes) { delta, _, _ ->
-    "${delta.inMinutes.absoluteValue.toInt()} molasses-like minutes ago"
+<dependency>
+	<groupId>ca.nihk</groupId>
+	<artifactId>relativetime</artifactId>
+	<version>0.0.2</version>
+	<type>pom</type>
+</dependency>
+```
+
+## How to use:
+
+In code set the language you want to use depending on how far away a given value is from current time. Do this using instances of the `TimeRangeFormatter` class, like so:
+
+```
+// Deltas between now (inclusive) and an hour from now (exclusive) will use the language "X minutes from now"
+val minutesFromNow = TimeRangeFormatter(now inclusiveToExclusive 1.hours) { delta, _, _ ->
+    "${delta.inMinutes.toInt()} minutes from now"
 }
 ```
-
-Then provide that to a new `RelativeTime` instance:
+ 
+Finally, plug that into an instance of `RelativeTime`. 
 
 ```
-val relativeTime = RelativeTime(timeRangeFormatters = listOf(minutesAgo))
+val relativeTime = RelativeTime(timeRangeFormatters = listOf(minutesFromNow))
 ```
 
-Any `Long` values given to its `RelativeTime.from(Long)` function that fall within the range of `minutesAgo` away from the current time will output the "${minutes} molasses-like minutes ago" `String`. 
+Now any values given to its `RelativeTime#from` function that fall within the range(s) of the `TimeRangeFormatter`(s) that it owns will output the language you've defined. 
 
-In the above example I only provided one small range of time to the `RelativeTime` instance - you can partition the entire gamut of `Long.MIN_VALUE` to `Long.MAX_VALUE` however you choose to. Just populate a list of `TimeRangerFormatter`s and pass them all to a single new instance of `RelativeTime`.
-
-The `RelativeTime` constructor also has default values that can be overwritten for further customization and testing.
+```
+println(relativeTime.from(System.currentTimeMillis().milliseconds + 5.minutes))  // prints "5 minutes from now"
+```
 
 See the [test directory](https://github.com/nihk/RelativeTime/tree/master/src/test/kotlin) for a bunch of other examples.
