@@ -45,4 +45,4 @@ Now any values given to its `RelativeTime#from` function that fall within the ra
 println(relativeTime.from(System.currentTimeMillis().milliseconds + 5.minutes))  // prints "5 minutes from now"
 ```
 
-Optionally you can instantiate `RelativeTime` without any arguments and it will use a set of default values.
+Optionally you can instantiate `RelativeTime` without any arguments and it will use a set of [default values](https://github.com/nihk/RelativeTime/blob/master/src/main/kotlin/TimeRangeFormatter.kt#L46).
