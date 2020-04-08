@@ -33,13 +33,13 @@ val minutesFromNow = TimeRangeFormatter(now inclusiveToExclusive 1.hours) { delt
 }
 ```
  
-Finally, plug that into an instance of `RelativeTime`. 
+Finally, plug that into an instance of `RelativeTime`:
 
 ```
 val relativeTime = RelativeTime(timeRangeFormatters = listOf(minutesFromNow))
 ```
 
-Now any values given to its `RelativeTime#from` function that fall within the range(s) of the `TimeRangeFormatter`(s) that it owns will output the language you've defined. 
+Now any values given to its `RelativeTime#from` function that fall within the range(s) of the `TimeRangeFormatter`(s) that it owns will output the language you've defined: 
 
 ```
 println(relativeTime.from(System.currentTimeMillis().milliseconds + 5.minutes))  // prints "5 minutes from now"
