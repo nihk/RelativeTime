@@ -8,7 +8,7 @@ class TimeRangeFormatter(
 ) {
 
     fun contains(duration: Duration): Boolean {
-        return range.contains(duration)
+        return duration in range
     }
 }
 
@@ -19,12 +19,15 @@ val endOfTime = Long.MAX_VALUE.milliseconds
 infix fun Duration.inclusiveToInclusive(end: Duration): ClosedRange<Duration> {
     return this..end
 }
+
 infix fun Duration.inclusiveToExclusive(end: Duration): ClosedRange<Duration> {
     return this..(end - 1.milliseconds)
 }
+
 infix fun Duration.exclusiveToInclusive(end: Duration): ClosedRange<Duration> {
     return (this + 1.milliseconds)..end
 }
+
 infix fun Duration.exclusiveToExclusive(end: Duration): ClosedRange<Duration> {
     return (this + 1.milliseconds)..(end - 1.milliseconds)
 }
