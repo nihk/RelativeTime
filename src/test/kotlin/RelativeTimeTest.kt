@@ -1,4 +1,5 @@
 import org.junit.Assert
+import org.junit.Assert.fail
 import org.junit.Test
 import java.util.*
 import kotlin.time.milliseconds
@@ -274,15 +275,40 @@ class RelativeTimeTest {
         )
     }
 
+    @Test(expected = IllegalStateException::class)
+    fun `overlapping time ranges throw when checking for overlaps is true`() {
+        createRelativeTime(
+            now = 0L,
+            timeZone = toronto,
+            timeRangeFormatters = Fakes.overlapping,
+            fallback = "fallback",
+            checkForOverlappingTimeRanges = true
+        )
+
+        fail()
+    }
+
+    @Test
+    fun `overlapping time ranges don't throw when checking for overlaps is false`() {
+        createRelativeTime(
+            now = 0L,
+            timeZone = toronto,
+            timeRangeFormatters = Fakes.overlapping,
+            fallback = "fallback",
+            checkForOverlappingTimeRanges = false
+        )
+    }
+
     private fun validateRelativeTime(
         expected: String?,
         date: Long,
         now: Long,
         timeZone: TimeZone,
         timeRangeFormatters: List<TimeRangeFormatter>,
-        fallback: String = ""
+        fallback: String = "",
+        checkForOverlappingTimeRanges: Boolean = true
     ) {
-        val relativeTime = createRelativeTime(now, timeZone, timeRangeFormatters, fallback)
+        val relativeTime = createRelativeTime(now, timeZone, timeRangeFormatters, fallback, checkForOverlappingTimeRanges)
 
         val result = relativeTime.from(date)
 
@@ -295,9 +321,10 @@ class RelativeTimeTest {
         now: Long,
         timeZone: TimeZone,
         timeRangeFormatters: List<TimeRangeFormatter>,
-        fallback: String = ""
+        fallback: String = "",
+        checkForOverlappingTimeRanges: Boolean = true
     ) {
-        val relativeTime = createRelativeTime(now, timeZone, timeRangeFormatters, fallback)
+        val relativeTime = createRelativeTime(now, timeZone, timeRangeFormatters, fallback, checkForOverlappingTimeRanges)
 
         val result = relativeTime.from(date)
 
@@ -308,13 +335,15 @@ class RelativeTimeTest {
         now: Long,
         timeZone: TimeZone,
         timeRangeFormatters: List<TimeRangeFormatter>,
-        fallback: String
+        fallback: String,
+        checkForOverlappingTimeRanges: Boolean
     ): RelativeTime {
         return RelativeTime(
             timeRangeFormatters = timeRangeFormatters,
             timeZone = timeZone,
             currentTimeProvider = { now.milliseconds },
-            fallback = fallback
+            fallback = fallback,
+            checkForOverlappingTimeRanges = checkForOverlappingTimeRanges
         )
     }
 }

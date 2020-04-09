@@ -3,8 +3,8 @@ import kotlin.time.Duration
 import kotlin.time.milliseconds
 
 class TimeRangeFormatter(
-    private val range: ClosedRange<Duration>,
-    val format: (delta: Duration, time: Duration, timeZone: TimeZone) -> String
+    internal val range: ClosedRange<Duration>,
+    internal val format: (delta: Duration, time: Duration, timeZone: TimeZone) -> String
 ) {
 
     fun contains(duration: Duration): Boolean {

@@ -63,4 +63,13 @@ internal object Fakes {
             toDateString("MMMM d, yyyy", time, timeZone)
         }
     )
+
+    internal val overlapping = listOf(
+        TimeRangeFormatter(1.minutes inclusiveToExclusive 2.minutes) { _, _, _ ->
+            ""
+        },
+        TimeRangeFormatter(1.minutes inclusiveToExclusive 1.hours) { _, _, _ ->
+            ""
+        }
+    )
 }

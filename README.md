@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.4) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.4/link)
+[ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.5) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.5/link)
 
 # RelativeTime
 A library that lets you define the language of relative time, e.g. "5 hours ago" or "1 month from now" and so on.
@@ -34,7 +34,7 @@ For more examples, [see the fakes](https://github.com/nihk/RelativeTime/blob/mas
 
 With Gradle (make sure you have `jcenter()` set as a repository):
 
-```implementation "ca.nihk:relativetime:0.0.4"```
+```implementation "ca.nihk:relativetime:0.0.5"```
 
 With Maven:
 
@@ -42,7 +42,7 @@ With Maven:
 <dependency>
 	<groupId>ca.nihk</groupId>
 	<artifactId>relativetime</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<type>pom</type>
 </dependency>
 ```
