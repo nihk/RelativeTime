@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'ca.nihk'
-version '0.0.5'
+version '0.0.6'
 
 sourceCompatibility = 1.8
 
@@ -87,7 +87,7 @@ publishing {
             }
             groupId 'ca.nihk'
             artifactId 'relativetime'
-            version '0.0.5'
+            version '0.0.6'
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'A library that helps you define relative time, e.g. "5 hours ago" or "1 month from now"')
@@ -111,8 +111,8 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/nihk/RelativeTime.git'
         version {
-            name = '0.0.5'
-            desc = '0.0.5'
+            name = '0.0.6'
+            desc = '0.0.6'
             released  = new Date()
         }
     }

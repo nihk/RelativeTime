@@ -1,3 +1,5 @@
+package ca.nihk.relativetime
+
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.milliseconds

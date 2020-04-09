@@ -1,3 +1,5 @@
+package ca.nihk.relativetime
+
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.absoluteValue

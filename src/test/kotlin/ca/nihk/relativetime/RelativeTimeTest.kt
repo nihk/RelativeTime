@@ -1,3 +1,5 @@
+package ca.nihk.relativetime
+
 import org.junit.Assert
 import org.junit.Assert.fail
 import org.junit.Test
