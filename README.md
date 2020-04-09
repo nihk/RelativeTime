@@ -28,7 +28,7 @@ Now any values given to its `RelativeTime#from` function that fall within the ra
 println(relativeTime.from(System.currentTimeMillis().milliseconds + 5.minutes))  // prints "5 minutes from now"
 ```
 
-For more examples, [see the fakes](https://github.com/nihk/RelativeTime/blob/master/src/test/kotlin/Fakes.kt#L19) I've used in my tests.
+For more examples, [see the fakes](https://github.com/nihk/RelativeTime/blob/master/src/test/kotlin/ca/nihk/relativetime/Fakes.kt#L21) I've used in my tests.
 
 ## Install:
 
