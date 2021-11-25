@@ -3,46 +3,36 @@
 # RelativeTime
 A library that lets you define the language of relative time, e.g. "5 hours ago" or "1 month from now" and so on.
 
-Note: this library uses `kotlin.time.Duration` which is, at the time of writing, an experimental API requiring Kotlin 1.3.50 and above.
-
 ## How to use:
-
-In code set the language you want to use depending on how far away a given value is from current time. Do this using instances of the `TimeRangeFormatter` class, like so:
+Start with the DSL builder like so:
 
 ```
-// Deltas between now (inclusive) and an hour from now (exclusive) will use the language "X minutes from now"
-val minutesFromNow = TimeRangeFormatter(now inclusiveToExclusive 1.hours) { delta, _, _ ->
-    "${delta.inMinutes.toInt()} minutes from now"
+val relativeTime = relativeTime {
+    // ...
 }
 ```
- 
-Finally, plug that into an instance of `RelativeTime`:
+
+Add any number of `timeRangeFormatter` builders in that block to define the kinds of language you want to use within an interval of time:
 
 ```
-val relativeTime = RelativeTime(timeRangeFormatters = listOf(minutesFromNow))
+    // From 1 hour ago til now, will print in a 'minutes from now' style.
+    timeRangeFormatter(now exclusiveToInclusive 1.toDuration(DurationUnit.HOURS)) { info ->
+        "${info.delta.inWholeMinutes.absoluteValue} minutes from now"
+    }
 ```
 
-Now any values given to its `RelativeTime#from` function that fall within the range(s) of the `TimeRangeFormatter`(s) that it owns will output the language you've defined: 
+There's also other builder functions like `timeZone` and `currentTimeProvider`.
+
+Once that's done, any values passed to its `RelativeTime.from` function that fall within the range(s) of the `TimeRangeFormatter`(s) that it owns will output the language you've defined: 
 
 ```
-println(relativeTime.from(System.currentTimeMillis().milliseconds + 5.minutes))  // prints "5 minutes from now"
+val currentTime = System.currentTimeMillis().toDuration(DurationUnit.MILLISECONDS)
+val fiveMinutes = 5.toDuration(DurationUnit.MILLISECONDS)
+relativeTime.from(currentTime + fiveMinutes).let(::println)  // prints "5 minutes from now"
 ```
 
-For more examples, [see the fakes](https://github.com/nihk/RelativeTime/blob/master/src/test/kotlin/ca/nihk/relativetime/Fakes.kt#L21) I've used in my tests.
+For more examples, see the sample gradle module in this project or the Fakes.kt file in `library/src/test`.
 
 ## Install:
 
-With Gradle (make sure you have `jcenter()` set as a repository):
-
-```implementation "ca.nihk:relativetime:0.0.6"```
-
-With Maven:
-
-```
-<dependency>
-	<groupId>ca.nihk</groupId>
-	<artifactId>relativetime</artifactId>
-	<version>0.0.6</version>
-	<type>pom</type>
-</dependency>
-```
+Copy and paste! It's only two small files. This was originally published to JCenter, but that's gonezo.
