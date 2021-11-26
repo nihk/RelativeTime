@@ -15,7 +15,7 @@ Add any number of `timeRangeFormatter` builders in that block to set the kinds o
 ```
     // From now til 1 hour from now, this will print in a 'minutes from now' style.
     timeRangeFormatter(now exclusiveToInclusive 1.toDuration(DurationUnit.HOURS)) { info ->
-        "${info.delta.inWholeMinutes.absoluteValue} minutes from now"
+        "${info.delta.inWholeMinutes} minutes from now"
     }
 ```
 
