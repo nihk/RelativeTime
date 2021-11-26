@@ -1,5 +1,3 @@
-[ ![Download](https://api.bintray.com/packages/nickjrose/relativetime/relativetime/images/download.svg?version=0.0.6) ](https://bintray.com/nickjrose/relativetime/relativetime/0.0.6/link)
-
 # RelativeTime
 A library that lets you define the language of relative time, e.g. "5 hours ago" or "1 month from now" and so on.
 
