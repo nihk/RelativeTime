@@ -10,7 +10,7 @@ val relativeTime = relativeTime {
 }
 ```
 
-Add any number of `timeRangeFormatter` builders in that block to define the kinds of language you want to use within an interval of time:
+Add any number of `timeRangeFormatter` builders in that block to set the kinds of output you want to use within an interval of time:
 
 ```
     // From 1 hour ago til now, will print in a 'minutes from now' style.
