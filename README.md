@@ -13,7 +13,7 @@ val relativeTime = relativeTime {
 Add any number of `timeRangeFormatter` builders in that block to set the kinds of output you want to use within an interval of time:
 
 ```
-    // From 1 hour ago til now, will print in a 'minutes from now' style.
+    // From now til 1 hour from now, this will print in a 'minutes from now' style.
     timeRangeFormatter(now exclusiveToInclusive 1.toDuration(DurationUnit.HOURS)) { info ->
         "${info.delta.inWholeMinutes.absoluteValue} minutes from now"
     }
