@@ -29,7 +29,7 @@ val fiveMinutes = 5.toDuration(DurationUnit.MILLISECONDS)
 relativeTime.from(currentTime + fiveMinutes).let(::println)  // prints "5 minutes from now"
 ```
 
-For more examples, see the sample gradle module in this project or the Fakes.kt file in `library/src/test`.
+For more examples, see the sample gradle module in this project or the TestUtils.kt file in `library/src/test`.
 
 ## Install:
 
