@@ -1,19 +1,19 @@
 package ca.nihk.library
 
-import java.util.*
+import java.util.TimeZone
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class TimeRangeFormatter(
+class TimeRangeFormatter<T>(
     private val range: ClosedRange<Duration>,
-    internal val format: (info: Info) -> String
+    internal val format: (info: Info) -> T
 ) {
     internal operator fun contains(duration: Duration): Boolean {
         return duration in range
     }
 
-    internal fun overlapsWith(other: TimeRangeFormatter): Boolean {
+    internal fun overlapsWith(other: TimeRangeFormatter<T>): Boolean {
         return range.start in other.range || range.endInclusive in other.range
     }
 

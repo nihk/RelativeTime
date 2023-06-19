@@ -1,21 +1,21 @@
 package ca.nihk.library
 
-import java.util.*
+import java.util.TimeZone
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-fun relativeTime(block: RelativeTime.Builder.() -> Unit): RelativeTime {
-    return RelativeTime.Builder()
-        .apply { block() }
+fun <T> relativeTime(block: RelativeTime.Builder<T>.() -> Unit): RelativeTime<T> {
+    return RelativeTime.Builder<T>()
+        .apply(block)
         .build()
 }
 
-class RelativeTime(
-    private val timeRangeFormatters: List<TimeRangeFormatter>,
+class RelativeTime<T>(
+    private val timeRangeFormatters: List<TimeRangeFormatter<T>>,
     private val timeZone: TimeZone = TimeZone.getDefault(),
     private val currentTimeProvider: () -> Duration,
-    private val fallback: String? = null,
+    private val fallback: T? = null,
     strictMode: Boolean = true
 ) {
     init {
@@ -24,16 +24,16 @@ class RelativeTime(
         }
     }
 
-    fun from(timeInMillis: String?): String? {
+    fun from(timeInMillis: String?): T? {
         val parsed = timeInMillis?.toLongOrNull() ?: return fallback
         return from(parsed)
     }
 
-    fun from(timeInMillis: Long): String {
+    fun from(timeInMillis: Long): T {
         return from(timeInMillis.toDuration(DurationUnit.MILLISECONDS))
     }
 
-    fun from(time: Duration): String {
+    fun from(time: Duration): T {
         val delta = time - currentTimeProvider()
 
         return timeRangeFormatters.find { delta in it }
@@ -48,27 +48,26 @@ class RelativeTime(
             for (j in i + 1 until ranges.size) {
                 val left = ranges[i]
                 val right = ranges[j]
-
                 check(!left.overlapsWith(right)) { "$left has an overlapping range with $right" }
             }
         }
     }
 
-    class Builder {
-        private val timeRangeFormatters = mutableListOf<TimeRangeFormatter>()
+    class Builder<T> {
+        private val timeRangeFormatters = mutableListOf<TimeRangeFormatter<T>>()
         private var timeZone: TimeZone? = null
         private var currentTimeProvider: (() -> Duration)? = null
-        private var fallback: String? = null
+        private var fallback: T? = null
         private var strictMode: Boolean = true
 
         fun timeRangeFormatter(
             range: ClosedRange<Duration>,
-            format: (info: TimeRangeFormatter.Info) -> String
+            format: (info: TimeRangeFormatter.Info) -> T
         ) = apply {
             timeRangeFormatter(TimeRangeFormatter(range, format))
         }
 
-        fun timeRangeFormatter(timeRangeFormatter: TimeRangeFormatter) = apply {
+        fun timeRangeFormatter(timeRangeFormatter: TimeRangeFormatter<T>) = apply {
             timeRangeFormatters += timeRangeFormatter
         }
 
@@ -80,7 +79,7 @@ class RelativeTime(
             this.currentTimeProvider = currentTimeProvider
         }
 
-        fun fallback(fallback: String) = apply {
+        fun fallback(fallback: T) = apply {
             this.fallback = fallback
         }
 
@@ -88,7 +87,7 @@ class RelativeTime(
             this.strictMode = strictMode
         }
 
-        fun build(): RelativeTime {
+        fun build(): RelativeTime<T> {
             return RelativeTime(
                 timeRangeFormatters = timeRangeFormatters,
                 timeZone = timeZone ?: TimeZone.getDefault(),

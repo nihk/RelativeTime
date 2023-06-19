@@ -1,9 +1,13 @@
 package ca.nihk.library
 
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.absoluteValue
-import kotlin.time.*
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 internal object TestUtils {
     private fun toDateString(datePattern: String, time: Duration, timeZone: TimeZone): String {

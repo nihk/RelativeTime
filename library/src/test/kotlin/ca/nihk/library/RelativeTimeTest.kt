@@ -3,7 +3,7 @@ package ca.nihk.library
 import org.junit.Assert
 import org.junit.Assert.fail
 import org.junit.Test
-import java.util.*
+import java.util.TimeZone
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -306,7 +306,7 @@ class RelativeTimeTest {
         date: Long,
         now: Long,
         timeZone: TimeZone,
-        timeRangeFormatters: List<TimeRangeFormatter>,
+        timeRangeFormatters: List<TimeRangeFormatter<String>>,
         fallback: String = "",
         strictMode: Boolean = true
     ) {
@@ -322,7 +322,7 @@ class RelativeTimeTest {
         date: String?,
         now: Long,
         timeZone: TimeZone,
-        timeRangeFormatters: List<TimeRangeFormatter>,
+        timeRangeFormatters: List<TimeRangeFormatter<String>>,
         fallback: String = "",
         checkForOverlappingTimeRanges: Boolean = true
     ) {
@@ -333,13 +333,13 @@ class RelativeTimeTest {
         Assert.assertEquals(expected, result)
     }
 
-    private fun createRelativeTime(
+    private fun <T> createRelativeTime(
         nowMillis: Long,
         timeZone: TimeZone,
-        timeRangeFormatters: List<TimeRangeFormatter>,
-        fallback: String,
+        timeRangeFormatters: List<TimeRangeFormatter<T>>,
+        fallback: T,
         strictMode: Boolean
-    ): RelativeTime {
+    ): RelativeTime<T> {
         return relativeTime {
             timeRangeFormatters.forEach(::timeRangeFormatter)
             timeZone(timeZone)
